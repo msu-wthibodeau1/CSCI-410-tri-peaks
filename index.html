@@ -1,14 +1,218 @@
-<DOCTYPE! html>
-<html lang="en">
+<!DOCTYPE>
+<html>
 
 <head>
-	<title>Tri Peaks Solitaire</title>
-	<meta charset="utf-8">
+  <title>Tri-Peaks</title>
 </head>
 
 <body>
+  
+  <!--this div contains all of the locations and id numbers of the playfield-->
+  <div id = "divfield">
+  <!--first row -->
+  <IMG STYLE="position:absolute; TOP:50px; LEFT:150px;" SRC="images/Back.png"
+    id = "1" onClick="onClicktest('1')">
+  <IMG STYLE="position:absolute; TOP:50px; LEFT:400px;" SRC="images/Back.png"
+    id = "2" onClick="onClicktest('2')">
+  <IMG STYLE="position:absolute; TOP:50px; LEFT:650px;" SRC="images/Back.png"
+    id = "3" onClick="onClicktest('3')">
+  
+  <!--second row-->
+  <IMG STYLE="position:absolute; TOP:80px; LEFT:110px;" SRC="images/Back.png"
+    id = "4" onClick="onClicktest('4')">
+  <IMG STYLE="position:absolute; TOP:80px; LEFT:190px;" SRC="images/Back.png"
+    id = "5" onClick="onClicktest('5')">
+  <IMG STYLE="position:absolute; TOP:80px; LEFT:360px;" SRC="images/Back.png"
+    id = "6" onClick="onClicktest('6')">
+  <IMG STYLE="position:absolute; TOP:80px; LEFT:440px;" SRC="images/Back.png"
+    id = "7" onClick="onClicktest('7')">
+  <IMG STYLE="position:absolute; TOP:80px; LEFT:610px;" SRC="images/Back.png"
+    id = "8" onClick="onClicktest('8')">
+  <IMG STYLE="position:absolute; TOP:80px; LEFT:690px;" SRC="images/Back.png"
+    id = "9" onClick="onClicktest('9')">
 
-<body>
+  <!--third row-->
+  <IMG STYLE="position:absolute; TOP:110px; LEFT:70px;" SRC="images/Back.png"
+    id = "10" onClick="onClicktest('10')">
+  <IMG STYLE="position:absolute; TOP:110px; LEFT:150px;" SRC="images/Back.png"
+    id = "11" onClick="onClicktest('11')">
+  <IMG STYLE="position:absolute; TOP:110px; LEFT:230px;" SRC="images/Back.png"
+    id = "12" onClick="onClicktest('12')">
+  <IMG STYLE="position:absolute; TOP:110px; LEFT:320px;" SRC="images/Back.png"
+    id = "13" onClick="onClicktest('13')">
+  <IMG STYLE="position:absolute; TOP:110px; LEFT:400px;" SRC="images/Back.png"
+    id = "14" onClick="onClicktest('14')">
+  <IMG STYLE="position:absolute; TOP:110px; LEFT:480px;" SRC="images/Back.png"
+    id = "15" onClick="onClicktest('15')">
+  <IMG STYLE="position:absolute; TOP:110px; LEFT:570px;" SRC="images/Back.png"
+    id = "16" onClick="onClicktest('16')">
+  <IMG STYLE="position:absolute; TOP:110px; LEFT:650px;" SRC="images/Back.png"
+    id = "17" onClick="onClicktest('17')">
+  <IMG STYLE="position:absolute; TOP:110px; LEFT:730px;" SRC="images/Back.png"
+    id = "18" onClick="onClicktest('18')">
+
+  <!--fourth row-->
+  <IMG STYLE="position:absolute; TOP:140px; LEFT:30px;" SRC="images/Back.png"
+    id = "19" onClick="onClicktest('19')">
+  <IMG STYLE="position:absolute; TOP:140px; LEFT:110px;" SRC="images/Back.png"
+    id = "20" onClick="onClicktest('20')">
+  <IMG STYLE="position:absolute; TOP:140px; LEFT:190px;" SRC="images/Back.png"
+    id = "21" onClick="onClicktest('21')">
+  <IMG STYLE="position:absolute; TOP:140px; LEFT:275px;" SRC="images/Back.png"
+    id = "22" onClick="onClicktest('22')">
+  <IMG STYLE="position:absolute; TOP:140px; LEFT:360px;" SRC="images/Back.png"
+    id = "23" onClick="onClicktest('23')">
+  <IMG STYLE="position:absolute; TOP:140px; LEFT:440px;" SRC="images/Back.png"
+    id = "24" onClick="onClicktest('24')">
+  <IMG STYLE="position:absolute; TOP:140px; LEFT:525px;" SRC="images/Back.png"
+    id = "25" onClick="onClicktest('25')">
+  <IMG STYLE="position:absolute; TOP:140px; LEFT:610px;" SRC="images/Back.png"
+    id = "26" onClick="onClicktest('26')">
+  <IMG STYLE="position:absolute; TOP:140px; LEFT:690px;" SRC="images/Back.png"
+    id = "27" onClick="onClicktest('27')">
+  <IMG STYLE="position:absolute; TOP:140px; LEFT:770px;" SRC="images/Back.png"
+    id = "28" onClick="onClicktest('28')">
+
+  <!--playdeck and active card-->
+  <IMG STYLE="position:absolute; TOP:300px; LEFT:100px;" SRC="images/Back.png"
+    id = "29" onClick="nextactive()">
+  <IMG STYLE="position:absolute; TOP:300px; LEFT:200px;" SRC="images/Back.png"
+    id = "30" onClick="deal()">
+  </div>
+
+
+  <script>
+    //variable for counting cards left in playing hand
+    var handcount = 23;    
+    
+    //creating the initial deck
+    var deck = [];
+    for(var i = 0, j = 1; i<=51; i++, j++)
+    {
+      deck[i] = j;
+    }
+    
+    //shuffling the initial deck
+    shuffle(deck);
+
+
+    //pulling the last 28 cards off of the deck after
+    //it has been shuffled for the cards on the field    
+    var playfield = [];
+    for(var i = 0, j = 51; i<28; i++, j--)
+    {
+      playfield[i] = deck[j]
+    }
+    
+
+    //taking the remaining cards out of the deck
+    //and placing them in the playing hand of cards
+    var hand = [];
+    for(var i = 0, j = 23; i<25; i++, j--)
+    {
+      hand[i] = deck[j]
+    }
+
+ 
+    //function to shuffle the initial deck of 
+    //cards after it is created
+    function shuffle(array) 
+    {
+      var index = array.length, temp, randomindex;
+
+      while (0 !== index) 
+      {
+        randomindex = Math.floor(Math.random() * index);
+        index -= 1;
+  
+        temp = array[index];
+        array[index] = array[randomindex];
+        array[randomindex] = temp;
+      }
+      
+       return array;
+     } 
+
+
+    //----work in progress----
+    //fuction so that when you click on a card it checks
+    //to see if it is a valid move and if so then plays the current
+    //card onto the active card pile then removes the current
+    //card from the playfield
+    function onClicktest(id)
+    {
+      
+      var index = (document.getElementById(id).src);
+      index = index.substring(index.lastIndexOf("/")+5,index.lastIndexOf("."));
+      
+      var activeindex = (document.getElementById(30).src);
+      activeindex = activeindex.substring(activeindex.lastIndexOf("/")+5,
+        activeindex.lastIndexOf("."));
+            
+      var currentcard = playfield[id-1];      
+
+      index %= 13;
+      activeindex %= 13;
+       
+      if(index+1 == activeindex || index-1 == activeindex ||
+         (index == 0 && activeindex == 12) || (index == 12 && activeindex == 0))
+      {
+        document.getElementById(30).src = "images/Card" + currentcard + ".png";
+      
+        //----this block of code is throwing an error when it runs----
+        var parent = document.getElementById("divfield");
+        var child = document.getElementById(id);
+        console.log(child);
+        parent.removeChild(child);
+      }
+     
+    }
+
+    //test function to check if cards can be "flipped" or changed
+    function testchange(id)
+    {
+      document.getElementById(id).src = "images/Card" + 1 + ".png";
+    }
+
+    //fuction to flip a card out of the play hand
+    //onto the active card pile and check to see
+    //if the play hand is out of card to signal a 
+    //Game Over alert
+    function nextactive()
+    {
+      document.getElementById(30).src = "images/Card" + hand[handcount] + ".png";
+     
+      handcount--;
+      
+      if(handcount == -2)
+      {
+        alert("Game Over");
+      }
+    }
+
+    //function to start the game by "fliping" the
+    //initial cards on the fourth row face up
+    function deal()
+    {
+      document.getElementById(19).src = "images/Card" + playfield[18] + ".png";
+      document.getElementById(20).src = "images/Card" + playfield[19] + ".png";
+      document.getElementById(21).src = "images/Card" + playfield[20] + ".png";
+      document.getElementById(22).src = "images/Card" + playfield[21] + ".png";
+      document.getElementById(23).src = "images/Card" + playfield[22] + ".png";
+      document.getElementById(24).src = "images/Card" + playfield[23] + ".png";
+      document.getElementById(25).src = "images/Card" + playfield[24] + ".png";
+      document.getElementById(26).src = "images/Card" + playfield[25] + ".png";
+      document.getElementById(27).src = "images/Card" + playfield[26] + ".png";
+      document.getElementById(28).src = "images/Card" + playfield[27] + ".png";
+
+    }
+
+    
+
+
+  </script>
+  
+
+</body>
 
 </html>
-
